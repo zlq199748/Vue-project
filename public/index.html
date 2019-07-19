@@ -2,16 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>gshop-client</title>
+        <!--视口设备-->         <!--可视区宽度=设备宽-->
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=no">
+    <title>优选</title>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1301227_yznv88qhu9b.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <style>
+      * {
+        -ms-touch-action: pan-y;
+        touch-action: pan-y;
+      }
+    </style>
   </head>
   <body>
-    <noscript>
-      <strong>We're sorry but gshop-client doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <div id="app">
+
+    </div>
   </body>
 </html>
+<!--解决移动端点击事件0.3延迟问题: 使用fastclick库-->
+<script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+<script>
+  if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function() {
+      FastClick.attach(document.body);
+    }, false);
+    if(!window.Promise) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+    }
+  }
+</script>
+<script>
+  //设置rem的大小
+  (function () {
+    var html=document.documentElement
+    var Wtml=html.getBoundingClientRect().width; //可视区宽度 375*667 iphone6
+    console.log(Wtml);
+    html.style.fontSize=Wtml/10 +'px' //750的图纸  640 就除以6.4 根元素字体大小1rem ==10px
+  })()
+</script>

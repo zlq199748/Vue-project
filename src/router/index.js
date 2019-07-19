@@ -1,3 +1,8 @@
-/**
- * Created by 金枪不倒张老板 on 2019/7/18.
- */
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import routes from './routes'
+Vue.use(VueRouter)
+export default new VueRouter({
+  routes,
+  mode:'history'//去除#
+})

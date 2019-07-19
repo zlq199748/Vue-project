@@ -1,3 +1,3 @@
-/**
- * Created by 金枪不倒张老板 on 2019/7/18.
- */
+import ajax from './ajax'
+
+export const home=()=>ajax('/home')
