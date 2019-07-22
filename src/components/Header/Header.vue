@@ -3,8 +3,8 @@
   <div class="page">
     <div class="page-header">
       <slot name="left"/>
-      <div class="page-top">
-        <i class="iconfont icon-sousuo"></i>
+      <div class="page-top" @click="goTosearch('/search')">
+        <i class="iconfont icon-sousuo" ></i>
         <span>搜索商品，共21708款好物</span>
       </div>
       <slot name="right"/>
@@ -13,13 +13,19 @@
 </template>
 <script>
   export default{
-
+    methods:{
+      goTosearch(path){
+        this.$router.push(path)
+      }
+    }
   }
 
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
   .page
-    z-index 60
+    position fixed
+    top 0
+    z-index 20
     width 100%
     background: #fff
     .page-header

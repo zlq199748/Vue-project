@@ -24,7 +24,15 @@ module.exports = {
          pathRewrite: {
            '^/api': '', // 去掉path前面的/api
          },
+       },
+       '/sp': {
+         target: 'https://m.you.163.com',
+         changeOrigin: true,
+         pathRewrite: {// 重写路径: 去掉路径中开头的'/api'
+           '^/sp': ''
+         }
        }
+
      }
    }
 }

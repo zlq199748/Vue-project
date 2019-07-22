@@ -1,6 +1,6 @@
 <template>
   <!--头部-->
-  <div style="background:#F2F5F4 ">
+  <div style="background:#F2F5F4;height: 100%">
     <div class="page-two">
       <div class="page-header-two">
         <i class="iconfont icon-shouye" @click="goTohome('/') "></i>
@@ -16,8 +16,8 @@
       <div class="btnWrap">
         <div class="btn1">
           <i class="iconfont icon-44"></i>
-          <mt-button type="danger" size="large" class="button" >手机号码登录</mt-button>
-          <mt-button type="danger" plain size="large" class="button" >邮箱账号登录</mt-button>
+          <mt-button type="danger" size="large" class="button" @click="activeShow(2)">手机号码登录</mt-button>
+          <mt-button type="danger" plain size="large" class="button" @click="activeShow(3)">邮箱账号登录</mt-button>
         </div>
         <div class="btn2">
           <i class="iconfont icon-youxiang"></i>
@@ -43,6 +43,9 @@
     data(){
       return{
       }
+    },
+    props:{
+      activeShow:Function
     },
     methods:{
       gosousuo(path){
@@ -108,8 +111,7 @@
           top -1.2rem
           color #FF3333
       p
-        padding-left  30%
-        margin-bottom 5rem
+        padding-left  35%
         font-size .42rem
   .applicable
     span

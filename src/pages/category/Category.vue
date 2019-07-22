@@ -6,25 +6,34 @@
         <i class="iconfont icon-shouye" @click="goTohome('/') "></i>
         <router-link to="/category/topic" >发现</router-link>
         <router-link to="/category/expert">甄选家</router-link>
-        <i class="iconfont icon-sousuo" ></i>
-        <i class="iconfont icon-gouwuche"></i>
+        <i class="iconfont icon-sousuo" @click="goTosearch('/search')" ></i>
+        <i class="iconfont icon-gouwuche" @click="goToshop('/individual')"></i>
       </div>
     </div>
   <router-view/>
   </div>
-
 </template>
 <script>
   export default{
 
     data(){
       return{
+
         }
       },
+
+
     methods:{
+      goTosearch(path){
+        this.$router.push(path)
+      },
       goTohome(path){
         this.$router.push(path)
+      },
+      goToshop(path){
+        this.$router.push(path)
       }
+
     }
   }
 
@@ -32,8 +41,10 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .router-link-active
     color #b4282d
-    font-size .7rem
+    font-size .6rem
   .page-two
+    z-index 2
+    position relative
     width 100%
     background: #fff
     display flex

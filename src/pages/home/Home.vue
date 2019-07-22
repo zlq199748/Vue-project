@@ -1,9 +1,9 @@
 <template>
   <!--头部-->
-  <div class="bai">
+  <div class="bai" v-if="homeData.kingKongModule">
     <Header>
      <span class="page-left" slot="left">网易严选</span>
-     <button slot="right"><p slot="right">登录</p></button>
+     <button slot="right"><p slot="right" @click="logindeng('/login')">登录</p></button>
     </Header>
    <!--容器-->
     <div class="maskishow">
@@ -31,7 +31,7 @@
       </ul>
       <span class="icon" @click="masktoshow">
         <i class="iconfont icon-jiantou" v-if="!mask"></i>
-        <i class="iconfont active icon-xiangshangjiantou" v-else="mask"></i>
+        <i class="iconfont active icon-xiangshangjiantou"  v-else="mask"></i>
       </span>
     </div>
     <!--轮播图-->
@@ -64,52 +64,10 @@
       <!--内容区域-->
       <div class="content">
         <ul class="content-ul">
-          <li class="content-li">
+          <li class="content-li" v-for="(item,index) in homeData.kingKongModule.kingKongList":key="index">
             <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="img">
-              <span>新品首发</span>
+              <img :src="item.picUrl" alt="img">
+              <p>{{item.text}}</p>
             </a>
           </li>
         </ul>
@@ -117,38 +75,17 @@
       </div>
       <!--广告-->
       <div class="content-one">
-        <div class="content-z">
-          <a href="javascript:;" class="content-y">
-           <span>几元就买到小幸福</span>
-           <span>珍惜噬手可得的小幸福</span>
-          <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
-          <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
-        </a>
-        </div>
-        <div class="content-z">
-          <a href="javascript:;" class="content-y">
-            <span>几元就买到小幸福</span>
-            <span>珍惜噬手可得的小幸福</span>
-            <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
-            <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
-          </a>
-        </div>
-        <div class="content-z">
-          <a href="javascript:;" class="content-y">
-            <span>几元就买到小幸福</span>
-            <span>珍惜噬手可得的小幸福</span>
-            <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
-            <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
-          </a>
-        </div>
-        <div class="content-z">
-          <a href="javascript:;" class="content-y">
-            <span>几元就买到小幸福</span>
-            <span>珍惜噬手可得的小幸福</span>
-            <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
-            <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
-          </a>
-        </div>
+        <ul>
+          <li v-for="(item,index) in homeData.sceneLightShoppingGuideModule":key="index">
+          <div class="content-z">
+            <a href="javascript:;" class="content-y">
+              <span>{{item.styleItem.title}}</span>
+              <span>{{item.styleItem.desc}}</span>
+              <img v-for="(pic,index) in item.styleItem.picUrlList" :key="index" :src="pic" alt="img">
+            </a>
+          </div>
+        </li>
+        </ul>
       </div>
     </div>
 
@@ -160,6 +97,7 @@
   import BScroll from  'better-scroll'
   import Swiper from 'swiper'
   import "swiper/dist/css/swiper.min.css"
+  import {mapState}from 'vuex'
   export default{
 
     data(){
@@ -181,6 +119,9 @@
         }
       },
     methods:{
+      logindeng(path){
+         this.$router.push(path)
+      },
     masktoshow(){
         this.mask=!this.mask
      },
@@ -191,26 +132,42 @@
         this.current=index;
       }
     },
+
     mounted(){
-      new Swiper('.swiper-container', {
+      this.$store.dispatch('getHome',()=>{
+         this.$nextTick(()=>{
+           new Swiper('.swiper-container', {
+             autoplay:true,//自动轮播
+             pagination: {
+               el: '.swiper-pagination',
+
+             },
 //    direction: 'vertical', // 垂直切换选项
-        loop: true// 循环模式选项
+             loop: true,// 循环模式选项
+           })
+
+           new BScroll(this.$refs.wrapper,{
+             scrollX: true,
+             scrollY:false,
+             freeScroll:false,
+
+           })
+         })
       })
 
-        new BScroll(this.$refs.wrapper,{
-          scrollX: true,
-          scrollY:false,
-          freeScroll:false,
-          pagination: {
-            el: '.swiper-pagination',
+      },
 
-          },
-        })
+    computed:{
+      ...mapState({
+        homeData:state=>state.home.homeData
+         
+         })
+       }
       }
-     }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
 .bai
+  background-color: #f4f4f4;
   /*头部导航轮播*/
   .maskishow//容器
     position relative
@@ -218,7 +175,8 @@
       position absolute
       left 0
       border-bottom 0
-      top 6rem
+      top 7rem
+      z-index 12
       .order-information-ul
         display: flex
         width 100%
@@ -233,11 +191,16 @@
             text-align center
             font-size: .32rem
     .menu-wrapper//导航
-      z-index 1232
+      position fixed
+      top .96rem
+      left 0rem
+      z-index 13
+      width 100%
+      background #ffffff
       overflow: hidden
       white-space: nowrap
       height 1rem
-      margin .15rem .15rem .15rem .15rem
+      margin .15rem .15rem .15rem 0rem
       ul
         width 1400px
         .menu-item
@@ -252,13 +215,12 @@
             color: #b4282d
             border-bottom  .55rem solid
       .icon
-        z-index 40
         position absolute
-        left 8.7rem
+        left 8.5rem
         right 0
         bottom 0
         top 5px
-        width: 1.33333rem;
+        width: 1.5555rem;
         height: .7rem;
         text-align: center;
         background: #fff
@@ -266,29 +228,30 @@
           font-size .9rem
 
     .swiper-container//轮播图
+      margin-top 1.1rem
       img
         width 100%
       position absolute
       top 1rem
       left 0
       right 0
-
     .maskshow //遮罩层
       position: fixed;
-      z-index: 20;
+      z-index: 15;
       background: rgba(0,0,0,.5);
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       .tabWarap
+        position absolute
         margin-top 1.05rem
         z-index 10
         background-color #FFFFFF
         .tabAlter
           font-size .45rem
-          margin-left .2rem
-          margin-top .rem
+          margin-left .4rem
+          margin-top .2rem
         .moreCate
           padding-top: .7rem;
           overflow: hidden
@@ -312,7 +275,12 @@
     width 100%
     background #ffffff
     position absolute
-    top 6.8rem
+    top 6.9rem
+    p
+      width 2rem
+      height 1rem
+      font-size .35rem
+      margin-left .1rem
     img
       width 100%
     .content-ul
@@ -320,8 +288,8 @@
       li
         text-align center
         margin .47rem .47rem .7rem .47rem
-        width: 1.46667rem
-        height: 1.46667rem
+        width: 1.36667rem
+        height: 1.36667rem
         float left
         img
           width: 1.46667rem
@@ -335,9 +303,7 @@
     overflow: hidden;
     background: #fff;
     margin-bottom: .26667rem;
-
     .content-y
-
       background #F5F5F5
       display: block;
       width: 4.57333rem;

@@ -1,11 +1,11 @@
 <template>
   <!--头部-->
-  <div style="background:#ffffff;height: 100%">
+  <div style="background:#ffffff;">
     <div class="page-two">
       <div class="page-header-two">
         <i class="iconfont icon-shouye" @click="goTohome('/') "></i>
         <span>网易严选</span>
-        <i class="iconfont icon-sousuo" ></i>
+        <i class="iconfont icon-sousuo" @click="gosousuo('/search')"></i>
         <i class="iconfont icon-gouwuche" @click="goToshop('/individual')"></i>
       </div>
     </div>
@@ -24,7 +24,7 @@
       <div class="btnWrap">
         <div class="btn1">
           <mt-button type="danger" size="large" class="button" >登录</mt-button>
-          <mt-button type="danger" plain size="large" class="button" >其他登录方式</mt-button>
+          <mt-button type="danger" plain size="large" class="button" @click="activeShow(1)">其他登录方式</mt-button>
         </div>
       </div>
     </div>
@@ -37,7 +37,13 @@
       return{
       }
     },
+    props:{
+      activeShow:Function
+    },
     methods:{
+      gosousuo(path){
+        this.$router.push(path)
+      },
       goTohome(path){
         this.$router.push(path)
       },
@@ -49,6 +55,7 @@
 
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
+
   .iconfont
     z-index 60
     font-size .5rem
@@ -68,6 +75,7 @@
       padding  .4rem .2rem .4rem .2rem
       width 100%
   .content
+    background #fffff
     a
       width: 100px;
       height: 20px;

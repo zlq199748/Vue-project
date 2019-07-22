@@ -1,6 +1,6 @@
 <template>
   <!--底部导航-->
-   <footer class="footer-base">
+   <footer class="footer-base" v-if="true">
      <a href="javascript:;" class="footer-item" :class="{on:$route.path==='/'}" @click="goTo('/')">
        <i class="iconfont icon-shouye"></i>
        <span class="text">首页</span>
@@ -17,7 +17,7 @@
        <i class="iconfont icon-gouwuche"></i>
        <span class="text">购物车</span>
      </a>
-     <a href="javascript:;" class="footer-item" :class="{on:$route.path==='/shoppingCar'}" @click="goTo('/shoppingCar')">
+     <a href="javascript:;"  class="footer-item" :class="{on:$route.path==='/login'}" @click="goTo('/loginhome')">
        <i class="iconfont icon-geren"></i>
        <span class="text">个人</span>
      </a>
@@ -30,7 +30,7 @@
           this.$router.replace(path)
         }
       }
-  }
+    }
 
 </script>
 <style lang="stylus" rel="stylesheet/stylus">

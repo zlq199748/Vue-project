@@ -69,23 +69,12 @@
         "schemeUrl": "http://m.you.163.com/item/list?categoryId=1005001&style=pd",
         "text": "数码家电",
         "textColor": "333333"
-      },
-      {
-        "picUrl": "http://yanxuan.nosdn.127.net/fbca8e1f2948f0c09fc7672c2c125384.png",
-        "schemeUrl": "http://m.you.163.com/item/list?categoryId=1019000&style=pd",
-        "text": "全球特色",
-        "textColor": "333333"
-      },
-      {
-        "picUrl": "http://yanxuan.nosdn.127.net/861a521a6f53e3399205f18daa23cddc.gif",
-        "schemeUrl": "http://m.you.163.com/item/list?categoryId=1065000&style=pd",
-        "text": "超级会员",
-        "textColor": "333333"
       }
     ],
     "selectedColor": "ffffffff"
   },
-  "component3": "-----------------购物导航榜单-----------------",
+
+  "component3": "-----------------热销榜-----------------",
   "sceneLightShoppingGuideModule": [
     {
       "styleItem": {

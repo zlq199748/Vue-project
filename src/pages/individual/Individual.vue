@@ -22,12 +22,18 @@
     </div>
     <div class="content">
       <span>去添加点什么吧</span>
-      <button>登录</button>
+      <button @click="goTologin('/login')">登录</button>
     </div>
   </div>
 </template>
 <script>
-  export default{}
+  export default{
+    methods:{
+      goTologin(path){
+       this.$router.push(path)
+      }
+    }
+  }
 
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
@@ -45,21 +51,20 @@
         color #b4282d
         margin-right .6rem
     .order-information
+      width: 750px
+      position fixed
+      left: 0px
       .order-information-ul
-        position: relative
         display: flex
         width 100%
         height .93333rem
         background #eee
-        justify-content space-between
+        justify-content space-around
         li
           display: flex;
-
           align-items center
           span
             font-size: .32rem
-         
-
     .content
       position: absolute;
       top: -.66667rem;

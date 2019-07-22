@@ -2,25 +2,44 @@ import Category from '../pages/category/Category.vue'
 import Goods from '../pages/goods/Goods.vue'
 import Home from '../pages/home/Home.vue'
 import Individual from '../pages/individual/Individual.vue'
-import ShoppingCar from '../pages/shoppingcar/ShoppingCar.vue'
 import Topic from '../pages/topic/Topic.vue'
 import Expert from '../pages/expert/Expert.vue'
+import Loginhome from '../pages/login/Loginhome.vue'
+import Search from '../pages/search/Search.vue'
+
 export default [
   {
+    path:'/search',
+    component:Search
+
+  },
+  {
     path:'/',
-    component:Home
+    component:Home,
+    meta:{
+      isShow:true
+    }
   },
   {
     path:'/goods',
-    component:Goods
+    component:Goods,
+    meta:{
+      isShow:true
+    }
   },
   {
     path:'/category',
     component:Category,
+    meta:{
+      isShow:true
+    },
     children:[
       {
         path:'/category/topic',
         component:Topic,
+        meta:{
+          isShow:true
+        }
       },
       {
         path:'/category/expert',
@@ -35,11 +54,13 @@ export default [
 
   {
     path:'/individual',
-    component:Individual
+    component:Individual,
+    meta:{
+      isShow:true
+    }
   },
   {
-    path:'/shoppingCar',
-    component:ShoppingCar
+    path:'/loginhome',
+    component:Loginhome
   },
-
 ]
