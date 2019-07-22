@@ -1,7 +1,5 @@
 <template>
-<div>
-  ShoppingCar
-</div>
+
 </template>
 <script>
   export default{}

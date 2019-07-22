@@ -27,15 +27,7 @@
     <!--导航-->
     <div class="menu-wrapper" ref="wrapper">
       <ul>
-        <li class="menu-item on">推荐</li>
-        <li class="menu-item">居家生活</li>
-        <li class="menu-item">服饰鞋包</li>
-        <li class="menu-item">美食酒水</li>
-        <li class="menu-item">个人清洁</li>
-        <li class="menu-item">母婴亲子</li>
-        <li class="menu-item">运动旅行</li>
-        <li class="menu-item">数码家电</li>
-        <li class="menu-item">全球特色</li>
+        <li class="menu-item" v-for="(item,index) in liList " @click="addClass(index)" :class="{on:index==current}" >{{item.title}}</li>
       </ul>
       <span class="icon" @click="masktoshow">
         <i class="iconfont icon-jiantou" v-if="!mask"></i>
@@ -123,6 +115,41 @@
         </ul>
         <img src="https://yanxuan.nosdn.127.net/9e2248500f961bfe0e872027776b1e79.gif" alt="">
       </div>
+      <!--广告-->
+      <div class="content-one">
+        <div class="content-z">
+          <a href="javascript:;" class="content-y">
+           <span>几元就买到小幸福</span>
+           <span>珍惜噬手可得的小幸福</span>
+          <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
+          <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
+        </a>
+        </div>
+        <div class="content-z">
+          <a href="javascript:;" class="content-y">
+            <span>几元就买到小幸福</span>
+            <span>珍惜噬手可得的小幸福</span>
+            <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
+            <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
+          </a>
+        </div>
+        <div class="content-z">
+          <a href="javascript:;" class="content-y">
+            <span>几元就买到小幸福</span>
+            <span>珍惜噬手可得的小幸福</span>
+            <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
+            <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
+          </a>
+        </div>
+        <div class="content-z">
+          <a href="javascript:;" class="content-y">
+            <span>几元就买到小幸福</span>
+            <span>珍惜噬手可得的小幸福</span>
+            <img src="https://yanxuan.nosdn.127.net/1eecf74b769af3ed4c7817aeb5d6bb2b.png?imageView&thumbnail=150x150&quality=75" alt="img">
+            <img src="https://yanxuan.nosdn.127.net/f8ab1da43385ce39549272c1571f6397.png?imageView&thumbnail=150x150&quality=75" alt="">
+          </a>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -137,8 +164,20 @@
 
     data(){
       return{
+          current:0,
+          liList:[
+            {title:'推荐'},
+            {title:'居家生活'},
+            {title:'服饰鞋包'},
+            {title:'美食酒水'},
+            {title:'个人清洁'},
+            {title:'母婴亲子'},
+            {title:'运动旅行'},
+            {title:'数码家电'},
+          ],
           mask:false,
-          onshow:true
+          onshow:true,
+
         }
       },
     methods:{
@@ -147,6 +186,9 @@
      },
       onisShow(){
         this.onshow=!this.onshow
+      },
+      addClass(index){
+        this.current=index;
       }
     },
     mounted(){
@@ -159,12 +201,13 @@
           scrollX: true,
           scrollY:false,
           freeScroll:false,
+          pagination: {
+            el: '.swiper-pagination',
 
+          },
         })
-
-    }
-  }
-
+      }
+     }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
 .bai
@@ -239,15 +282,15 @@
       right: 0;
       bottom: 0;
       .tabWarap
-        margin-top 1.3rem
+        margin-top 1.05rem
         z-index 10
         background-color #FFFFFF
         .tabAlter
           font-size .45rem
           margin-left .2rem
-          margin-top .2rem
+          margin-top .rem
         .moreCate
-          padding-top: .32rem;
+          padding-top: .7rem;
           overflow: hidden
           .cateTag
             font-size .3rem
@@ -272,7 +315,6 @@
     top 6.8rem
     img
       width 100%
-
     .content-ul
       float left
       li
@@ -286,13 +328,35 @@
           height: 1.46667rem
         span
           font-size .35rem
+  .content-one
+    width 100%
+    position absolute
+    top 14rem
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: .26667rem;
 
+    .content-y
 
-
-
-
-
-
+      background #F5F5F5
+      display: block;
+      width: 4.57333rem;
+      height: 3.52rem;
+      float: left;
+      margin: .05333rem 0 0 .1rem;
+      padding: .26667rem 0 0 .26667rem;
+      border-radius: .05333rem;
+      span
+        display block
+        padding-left: .13333rem;
+        font-size: .42667rem;
+        font-family: PingFangSC-Medium;
+      img
+        display block
+        width: 2rem;
+        height: 2rem;
+        float: left;
+        margin-right: .05333rem;
 
 
 
