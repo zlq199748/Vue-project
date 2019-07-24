@@ -16,14 +16,14 @@
       </div>
 
       <div class="more-input">
-        <input type="tel" maxlength="11" placeholder="邮箱账号">
-        <input type="tel" maxlength="6" placeholder="密码">
+        <input type="tel" v-model="mailbox" @blur="eMail" placeholder="邮箱账号">
+        <input type="password" @blur="pswd" v-model="password"  placeholder="密码">
         <a href="javascript:;">注册账号</a>
         <a href="javascript:;">忘记密码</a>
       </div>
       <div class="btnWrap">
         <div class="btn1">
-          <mt-button type="danger" size="large" class="button" >登录</mt-button>
+          <mt-button type="danger" size="large" class="button" @click="register('/')">登录</mt-button>
           <mt-button type="danger" plain size="large" class="button" @click="activeShow(1)">其他登录方式</mt-button>
         </div>
       </div>
@@ -31,16 +31,77 @@
   </div>
 </template>
 <script>
+  import { Toast } from 'mint-ui';
   export default{
 
     data(){
       return{
+        mailbox:'',
+        password:''
+
       }
     },
+
     props:{
       activeShow:Function
     },
     methods:{
+      eMail(){
+        let reg=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+        if (!reg.test(this.mailbox)){
+          Toast({
+            message: '邮箱格式错误！',
+            iconClass: 'icon icon-success'
+          });
+        }
+
+      },
+
+      pswd(){
+        let pwd=/^\w+$/
+        if (!pwd.test(this.password)){
+          Toast({
+            message: '只能输入数字！',
+            iconClass: 'icon icon-success'
+          });
+        }
+      },
+
+      register(path){
+        let reg=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
+        let pwd=/^\w+$/
+        if (this.mailbox==''){
+          Toast({
+            message: '邮箱不能为空！',
+            iconClass: 'icon icon-success'
+          });
+        }else if (!reg.test(this.mailbox)){
+          Toast({
+            message: '邮箱格式错误！',
+            iconClass: 'icon icon-success'
+          });
+        }else if (this.password==''){
+          Toast({
+            message: '密码不能为空！',
+            iconClass: 'icon icon-success'
+          });
+        }else if (!pwd.test(this.phone)){
+          Toast({
+            message: '只能输入数字！',
+            iconClass: 'icon icon-success'
+          });
+        }else{
+          Toast({
+            message: '登录成功！',
+            iconClass: 'icon icon-success'
+          });
+          this.$router.replace(path)
+        }
+      },
+
+
+
+
       gosousuo(path){
         this.$router.push(path)
       },

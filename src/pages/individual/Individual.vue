@@ -22,7 +22,7 @@
     </div>
     <div class="content">
       <span>去添加点什么吧</span>
-      <button @click="goTologin('/login')">登录</button>
+      <button @click="goTologin('/loginhome')">登录</button>
     </div>
   </div>
 </template>

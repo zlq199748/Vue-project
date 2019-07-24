@@ -1,19 +1,15 @@
-/*此文件是发现的状态模块*/
+/*此文件是初始搜索的状态模块*/
 import {RECEIVE_INIT,RECEIVE_SEARCH} from '../mutation-types'
-import {reqInit,reqSearch} from '../../api'
+import {reqInit} from '../../api'
 
 const state={
   totals:{},//提示数据内容
-  itemtotal:{}//搜索
 
 }
 const mutations ={
 [RECEIVE_INIT](state,data){
   state.totals=data
 },
- [RECEIVE_SEARCH](state){
-
- }
 }
 
 const actions ={
@@ -25,9 +21,6 @@ const actions ={
       commit(RECEIVE_INIT,result.data)
     }
   },
-  async searchAbout({commit}){
-     const result =await reqSearch()
-  }
 }
 const getters={
 

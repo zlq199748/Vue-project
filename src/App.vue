@@ -1,6 +1,8 @@
 <template>
   <div id="body">
+    <keep-alive>
     <router-view/>
+    </keep-alive>
     <Footer v-if="$route.meta.isShow"/>
   </div>
 </template>

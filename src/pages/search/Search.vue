@@ -2,11 +2,11 @@
 <div class="warp" v-if="totals.defaultKeyword">
   <div class="header">
     <i class="iconfont icon-sousuo"></i>
-    <input class="input" @keyup="grabble" ref="searchInput" v-model="val" :placeholder="totals.defaultKeyword.keyword" maxlength="20" >
+    <input class="input"  v-model="val" :placeholder="totals.defaultKeyword.keyword" maxlength="20" >
     <span class="icon">
-    <i class="iconfont icon-cuowu" v-show="val" @click="mistake(val)"></i>
+     <i class="iconfont icon-cuowu" v-show="val" @click="mistake(val)"></i>
     </span>
-    <span class="cancel" @click="cancel">取消</span>
+    <span   class="cancel" @click="cancel">取消</span>
   </div>
 
   <div class="content">
@@ -23,7 +23,9 @@
     <div class="seek" v-if="val">
     <ul>
       <li v-for="(item,index) in searchdata" :key="index">
+        <div>
         <p>{{item}}</p>
+        </div>
       </li>
     </ul>
     </div>
@@ -31,14 +33,13 @@
 </div>
 </template>
 <script>
+  import {debounce} from '../../utils/debounce'
   import {mapState} from 'vuex'
-  import {reqSearch} from '../../api'
   export default{
 
     data(){
       return{
         val:'',
-        searchdata:[]
         }
       },
     methods:{
@@ -50,37 +51,26 @@
       cancel(){
         this.$router.back()
       },
-      //实时发送请求
-      async grabble(){
-        const result = await reqSearch(this.val)
-        if (result.code*1===200){
-          this.searchdata = result.data
-        }
-      }
-    },
 
+    },
+    created(){
+      this.$watch('val',debounce((newval) =>{
+        this.$store.dispatch('grabble',newval) //传入最新的值延迟一秒发送请求
+      },350))
+    },
     mounted(){
       this.$store.dispatch('searchContent')
     },
     computed:{
       ...mapState({
-
+        searchdata:state=>state.interval.searchdata,
         totals:state=>state.search.totals//提示内容数据
       })
     },
-
-//    watch: {
-//      inputVal(curVal, oldVal) {
-//        // 实现input连续输入，只发一次请求
-//        clearTimeout(this.timeout);
-//        this.timeout = setTimeout(() => {
-//          this.getListPOI(curVal);
-//        }, 300);
-//      }
-//    }
     }
 
 </script>
+<!--添加“scoped”属性以仅将CSS限制到此组件-->
 <style lang="stylus" rel="stylesheet/stylus">
   .warp
     overflow hidden
@@ -122,6 +112,13 @@
     .footer
       width 100%
       height 100%
+      .seek
+        ul
+          li
+            border  1px solid #fff
+            width 100%
+        p
+          font-size .4rem
       ul
         li
           line-height: .61333rem;

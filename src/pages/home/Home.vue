@@ -2,8 +2,8 @@
   <!--头部-->
   <div class="bai" v-if="homeData.kingKongModule">
     <Header>
-     <span class="page-left" slot="left">网易严选</span>
-     <button slot="right"><p slot="right" @click="logindeng('/login')">登录</p></button>
+     <span class="page-left" slot="left" style="font-size: 35px;margin-left: .3rem">网易严选</span>
+     <button slot="right"><p slot="right" @click="logindeng('/loginhome')">登录</p></button>
     </Header>
    <!--容器-->
     <div class="maskishow">
@@ -12,26 +12,18 @@
        <div class="tabWarap showActive">
        <div class="tabAlter">全部频道</div>
        <div class="moreCate">
-         <div class="cateTag cateTag-active">推荐</div>
-         <div class="cateTag">居家生活</div>
-         <div class="cateTag">服饰鞋包</div>
-         <div class="cateTag">美食酒水</div>
-         <div class="cateTag">个人护理</div>
-         <div class="cateTag">母婴亲子</div>
-         <div class="cateTag">运动旅行</div>
-         <div class="cateTag">数码家电</div>
-         <div class="cateTag">全球特色</div>
+         <div class="cateTag" :class="{on:index===current}" v-for="(item,index) in liList" @click="addclick(index)">{{item.title}}</div>
        </div>
      </div>
       </div>
     <!--导航-->
     <div class="menu-wrapper" ref="wrapper">
       <ul>
-        <li class="menu-item" v-for="(item,index) in liList " @click="addClass(index)" :class="{on:index==current}" >{{item.title}}</li>
+        <li ref="lis" class="menu-item" v-for="(item,index) in liList " @click="addClass(index)" :class="{on:index==current}" >{{item.title}}</li>
       </ul>
-      <span class="icon" @click="masktoshow">
+      <span class="icon" @click="masktoshow" :class="{active:mask}">
         <i class="iconfont icon-jiantou" v-if="!mask"></i>
-        <i class="iconfont active icon-xiangshangjiantou"  v-else="mask"></i>
+        <i class="iconfont active icon-xiangshangjiantou" v-else="mask"></i>
       </span>
     </div>
     <!--轮播图-->
@@ -112,6 +104,7 @@
             {title:'母婴亲子'},
             {title:'运动旅行'},
             {title:'数码家电'},
+            {title:'计生用品'},
           ],
           mask:false,
           onshow:true,
@@ -119,6 +112,10 @@
         }
       },
     methods:{
+      addclick(index){
+        this.current=index
+      },
+
       logindeng(path){
          this.$router.push(path)
       },
@@ -145,17 +142,23 @@
 //    direction: 'vertical', // 垂直切换选项
              loop: true,// 循环模式选项
            })
-
-           new BScroll(this.$refs.wrapper,{
+          this.scroll= new BScroll(this.$refs.wrapper,{
              scrollX: true,
              scrollY:false,
              freeScroll:false,
 
            })
+
          })
       })
 
       },
+    updated(){
+      this.$nextTick(()=>{
+
+        this.scroll.scrollToElement(this.$refs.lis[this.current],200)//指定li的index
+      })
+    },
 
     computed:{
       ...mapState({
@@ -202,7 +205,7 @@
       height 1rem
       margin .15rem .15rem .15rem 0rem
       ul
-        width 1400px
+        width 1600px
         .menu-item
           display: inline-block
           margin-bottom  .3rem
@@ -213,17 +216,21 @@
           text-align: center
           &.on
             color: #b4282d
-            border-bottom  .55rem solid
+            border-bottom  .05rem solid
       .icon
         position absolute
         left 8.5rem
         right 0
         bottom 0
         top 5px
+        z-index 100
         width: 1.5555rem;
         height: .7rem;
         text-align: center;
         background: #fff
+        &.active
+          transition 1s
+          transform rotate(180deg)
         .iconfont
           font-size .9rem
 
@@ -267,9 +274,9 @@
             background: #FAFAFA;
             border: 1px solid #CCC;
             border-radius: .05333rem
-          .cateTag-active
-            border: 1px solid #b4282d;
-            color: #b4282d;
+            &.on
+              color: #b4282d
+              border 1px solid
 
   .content
     width 100%

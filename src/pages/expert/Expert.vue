@@ -1,8 +1,8 @@
 <template>
- <div>
+ <div style="margin-top: 1.5rem;overflow: hidden">
    <!--滑动容器-->
    <div class="bscroll-container">
-   <ul style="height: 2000px">
+   <ul style="height: 2500px">
      <li>
          <!--轮播图-->
          <div class="swiper-container">
@@ -63,24 +63,30 @@
 </template>
 <script>
   import Swiper from 'swiper'
+  import "swiper/dist/css/swiper.min.css"
   import BScroll from  'better-scroll'
   import {mapState} from 'vuex'
   export default{
 
 
     mounted(){
-      //ASDASDSADASDDDDASDAAAAAAAADSD
-      new Swiper('.swiper-container', {
+
+      this.$nextTick(()=>{
+        new Swiper('.swiper-container', {
 //    direction: 'vertical', // 垂直切换选项
-        loop: true// 循环模式选项
+          loop: true// 循环模式选项
+        })
+       new BScroll('.bscroll-container',{
+          scrollY:true,
+          freeScroll:false,
+          pagination: {
+            el: '.swiper-pagination',
+          },
+        })
       })
-      new BScroll('.bscroll-container',{
-        scrollY:true,
-        freeScroll:false,
-        pagination: {
-          el: '.swiper-pagination',
-        },
-      })
+    },
+    updated(){
+
     }
   }
 

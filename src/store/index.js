@@ -6,6 +6,7 @@ import home from './modules/home'
 import Expert from './modules/Expert'
 import goods from './modules/goods'
 import search from './modules/search'
+import  interval from'./modules/interval'
 Vue.use(Vuex)
 export default new Vuex.Store({
   modules:{
@@ -13,6 +14,7 @@ export default new Vuex.Store({
      home,
      goods,
      Topic,
-     search
+     search,
+    interval
    }
  })

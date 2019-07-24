@@ -5,12 +5,11 @@
         <li class="menu-item" v-for="(item,index) in topicNav " @click="addClass(index)" :class="{on:index==current}" >{{item.tabName}}</li>
       </ul>
     </div>
-    <div class="bscroll-content">
-
-      <ul>
+    <div class="bscroll-content" ref="bscrollContent">
+      <ul v-if="topicManual.length>0">
         <li v-for="(item,index) in topicManual" :key="index">
           <!--结构one内容-->
-          <div class="content" v-if="itemChildren.style===1" v-for=" (itemChildren,index) in item.topics":key="">
+          <div class="content" v-if="itemChildren.style===1 && item.topics" v-for=" (itemChildren,index) in item.topics":key="">
           <div class="topic-List" v-if="itemChildren.style===1">
             <div class="topic-ListTop">
          <span>
@@ -28,8 +27,8 @@
             <span>{{itemChildren.readCount}}看过</span>
           </div>
         </div>
-          <div class="content-two" v-if="itemChildren.style===2" v-for=" (itemChildren,index) in item.topics":key="index">
-            <div class="content-content" v-if="itemChildren.style===2" >
+          <div class="content-two" v-if="itemChildren.style===2&& item.topics" v-for=" (itemChildren,index) in item.topics":key="index">
+            <div class="content-content">
               <div class="info">
                 <div class="user-name">
        <span class="ava">
@@ -52,107 +51,169 @@
             </div>
           </div>
         </li>
-        <!--结构two内容-->
-        <!--<li v-for="(item,index) in topicManual" :key="index" >-->
-          <!--<div class="content-two"  v-for=" (itemChildren,index) in item.topics":key="index">-->
-            <!--<div class="content-content" v-if="itemChildren.style===2" >-->
-              <!--<div class="info">-->
-                <!--<div class="user-name">-->
-       <!--<span class="ava">-->
-         <!--<img :src="itemChildren.avatar" alt="">-->
-       <!--</span>-->
-                  <!--<span>{{itemChildren.nickname}}</span>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="title">{{itemChildren.title}}</div>-->
-              <!--<div class="desc">{{itemChildren.subTitle}}</div>-->
-              <!--<div class="u-rcount">-->
-                <!--<i class="iconfont icon-sousuo"></i>-->
-                <!--<span>{{itemChildren.readCount}}人看过</span>-->
-              <!--</div>-->
-            <!--</div>-->
-
-
-            <!--<div class="u-pic">-->
-              <!--<img :src="itemChildren.picUrl" alt="img">-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</li>-->
       </ul>
+
+      <ul v-else>
+        <li>
+          <img  class="loading" src="../../../src/common/images/giphy.gif" alt="loading" >
+        </li>
+      </ul>
+
    </div>
   </div>
 </template>
 <script>
+  import {reqTopicManual} from '../../api'
+  import { Loadmore, Tabbar } from 'mint-ui'
   import {mapState} from 'vuex'
   import BScroll from  'better-scroll'
+ /* let wrapper = document.querySelector('.bscroll-content')
+  let scroll = new BScroll(wrapper, {})*/
   export default {
       data(){
          return{
+
            current:0,
+           topicManual:[],//内容
+           arr:[],
+           number:{
+             pages:1,//页数
+             pageSize:2//评论数
+           }
+
            }
          },
-      mounted(){
-        this.$store.dispatch('getNav',()=>{
 
-          this.$nextTick(()=>{
-            new BScroll(this.$refs.wrapper,{
+     async mounted(){
+            //内容请求
+            const result =await reqTopicManual(this.number.pages)
+            if (result.code*1===200){
+              const data=result.data
+              this.topicManual=data
+            }
+
+            this.nva= new BScroll(this.$refs.wrapper,{
               scrollX: true,
               scrollY:false,
               freeScroll:false,
-              pagination: {
-                el: '.swiper-pagination',
 
-              },
-            })
-            new BScroll('.bscroll-content',{
+            pagination: {
+               el: '.swiper-pagination',
+
+             },
+           })
+            this.content= new BScroll(this.$refs.bscrollContent,{
               scrollY:true,
               freeScroll:false,
+              pullDownRefresh: {
+                threshold: 50,
+                probeType: 3
+              },
+              pullUpLoad: {
+                threshold: 744
+              },
               pagination: {
                 el: '.swiper-pagination',
-              },
-            })
+           },
           })
-        })
-        this.$store.dispatch('getManual',()=>{
-          this.$nextTick(()=>{
-            new BScroll(this.$refs.wrapper,{
-              scrollX: true,
-              scrollY:false,
-              freeScroll:false,
-              pagination: {
-                el: '.swiper-pagination',
 
-              },
+            this.content.on('pullingDown',async()=>{
+              //内容请求
+              const result =await reqTopicManual(this.number.pages)
+              if (result.code*1===200){
+                const data=result.data
+                this.topicManual=data
+              }
+              this.$nextTick(() => {
+                this.content.refresh() // DOM 结构发生变化后，重新初始化BScroll
+              })
+              this.content.finishPullDown() // 下拉刷新动作完成后调用此方法告诉BScroll完成一次下拉动作
             })
-            new BScroll('.bscroll-content',{
-              scrollY:true,
-              freeScroll:false,
-              pagination: {
-                el: '.swiper-pagination',
-              },
-            })
-          })
-        })
+            this.content.on('pullingUp',async()=>{
+              //内容请求
+              this.number.pages++
+              const result =await reqTopicManual(this.number.pages)
+              if (result.code*1===200){
+                const data=result.data
 
-      },
+
+//                 this.arr= this.topicManual.concat(data)//会生成新数组
+                this.topicManual.push(...data)
+
+              }
+              this.$nextTick(() => {
+                this.content.refresh() // DOM 结构发生变化后，重新初始化BScroll
+              })
+              this.content.finishPullUp() // 上拉加载动作完成后调用此方法告诉BScroll完成一次上拉动作
+            })
+            this.$store.dispatch('getNav')
+        },
       methods:{
+
         addClass(index){
           this.current=index;
         }
       },
-    computed:{
+
+
+    watch:{
+
+      topicManual(){
+          this.$nextTick(()=>{
+            if(this.nav){
+              this.nav.refresh()
+            }else{
+              this.nav= new BScroll('.bscroll-content',{
+                scrollY:true,
+                freeScroll:false,
+                pagination: {
+                  el: '.swiper-pagination',
+                },
+              })
+            }
+
+          })
+      },
+      topicNav(){
+        this.$nextTick(()=>{
+          if(this.content){
+            this.content.refresh()
+          }else{
+            this.content= new BScroll(this.$refs.wrapper,{
+              scrollX: true,
+              scrollY:false,
+              freeScroll:false,
+              pagination: {
+                el: '.swiper-pagination',
+
+              },
+            })
+          }
+
+        })
+      }
+    },
+
+
+
+
+
+
+      computed:{
         ...mapState({
           topicNav:state=>state.Topic.topicNav,
-          topicManual:state=>state.Topic.topicManual
+          isLoading:state=>state.Topic.isLoading
         })
-       }
-    }
+       },
+
+     }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
   .menu-wrapper//导航
     width 100%
     background #ffffff
-    position relative
+    position fixed
+    top 1.1rem
     z-index 3
     overflow: hidden
     white-space: nowrap
@@ -184,7 +245,12 @@
       .iconfont
         font-size .9rem
   .bscroll-content
-    height 1000px
+    margin-top 2rem
+    height 200px
+    .loading
+      width: 100%
+      height 1100px
+
     .content
       width: 100%;
       background: #fff;

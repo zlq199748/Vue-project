@@ -83,7 +83,7 @@
       top 20px
       .left-name
         margin-top 1rem
-        height 690px
+        height 600px
         ul
           margin-top 1.5rem
           width 300px
@@ -98,7 +98,7 @@
       width 550px
       .right-name
         width 550px
-        height 395px
+        height 200px
         position absolute
         top 1.5rem
         left 30%
